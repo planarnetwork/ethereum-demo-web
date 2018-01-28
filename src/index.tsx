@@ -6,7 +6,6 @@ import "bulma/css/bulma.css";
 import {Container} from "./container/Container";
 
 const container = new Container();
-const getAccounts = container.getUpdateAccountList();
 
 ReactDOM.render(
   <App accountList={container.accountRepository}/>,
@@ -14,4 +13,6 @@ ReactDOM.render(
 );
 
 registerServiceWorker();
-getAccounts();
+container
+  .updateAccountList()
+  .then(() => container.deployFlowRepositoryContract(container.accountRepository.accounts[0]));

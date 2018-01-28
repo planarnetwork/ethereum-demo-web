@@ -10,8 +10,8 @@ function accountList(props: AccountListProps) {
   );
 }
 
-function accountRow (account: Account) {
-  return <li>{account}</li>;
+function accountRow (account: Account, id: number) {
+  return <li key={id}>{account}</li>;
 }
 
 export interface AccountListProps {

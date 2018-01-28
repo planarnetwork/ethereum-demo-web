@@ -2,9 +2,10 @@
 import * as memoize from "memoized-class-decorator";
 import {AccountRepository} from "../component/Account/AccountRepository";
 import {updateAccountListFactory} from "../component/Account/UpdateAccountList";
+import {deployFlowRepositoryContractFactory} from "../component/Flow/DeployFlowRepositoryContract";
 const Web3 = require("web3");
 
-declare var web3;
+declare var web3; // sometimes declared globally by metamask
 
 export class Container {
 
@@ -24,10 +25,12 @@ export class Container {
   }
 
   @memoize
-  public getUpdateAccountList(): Command {
+  public get updateAccountList(): Function {
     return updateAccountListFactory(this.web3, this.accountRepository);
   }
 
+  @memoize
+  public get deployFlowRepositoryContract(): Function {
+    return deployFlowRepositoryContractFactory(this.web3);
+  }
 }
-
-export type Command = () => any;
