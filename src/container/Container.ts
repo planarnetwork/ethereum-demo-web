@@ -2,8 +2,13 @@
 import * as memoize from "memoized-class-decorator";
 import {AccountRepository} from "../component/Account/AccountRepository";
 import {updateAccountListFactory} from "../component/Account/UpdateAccountList";
-import {deployFlowRepositoryContractFactory} from "../component/Flow/DeployFlowRepositoryContract";
+import {deployFlowRepositoryContractFactory} from "../component/FlowRepository/DeployFlowRepositoryContract";
 import Web3 from "web3";
+import {FlowRepositoryRepository} from "../component/FlowRepository/FlowRepositoryRepository";
+import {addStation, AddStation} from "../component/FlowRepository/AddStation";
+import {StationRepository} from "../component/Station/StationRepository";
+import {AddTestStations, addTestStations} from "../component/FlowRepository/AddTestStations";
+import {loadStationsFromContract, LoadStationsFromContract} from "../component/FlowRepository/LoadStationsFromContract";
 
 declare var web3; // sometimes declared globally by metamask
 
@@ -20,8 +25,33 @@ export class Container {
   }
 
   @memoize
+  public get loadStationFromContract(): LoadStationsFromContract {
+    return loadStationsFromContract(this.flowRepositoryRepository, this.stationRepository);
+  }
+
+  @memoize
+  public get addTestStations(): AddTestStations {
+    return addTestStations(this.addStation);
+  }
+
+  @memoize
+  public get addStation(): AddStation {
+    return addStation(this.flowRepositoryRepository, this.stationRepository);
+  }
+
+  @memoize
+  public get stationRepository(): StationRepository {
+    return new StationRepository();
+  }
+
+  @memoize
   public get accountRepository(): AccountRepository {
     return new AccountRepository();
+  }
+
+  @memoize
+  public get flowRepositoryRepository(): FlowRepositoryRepository {
+    return new FlowRepositoryRepository();
   }
 
   @memoize
@@ -31,6 +61,6 @@ export class Container {
 
   @memoize
   public get deployFlowRepositoryContract(): Function {
-    return deployFlowRepositoryContractFactory(this.web3);
+    return deployFlowRepositoryContractFactory(this.flowRepositoryRepository, this.web3);
   }
 }

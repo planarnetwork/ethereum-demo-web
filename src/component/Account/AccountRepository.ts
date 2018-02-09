@@ -2,8 +2,8 @@ import {observable} from "mobx";
 
 export class AccountRepository {
 
-  @observable public accounts: Account[] = [];
+  @observable public accounts: Address[] = [];
 
 }
 
-export type Account = string;
+export type Address = string;

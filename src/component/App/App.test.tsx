@@ -3,6 +3,12 @@ import * as ReactDOM from "react-dom";
 import {App} from "./App";
 
 it("renders without crashing", () => {
-  const div = document.createElement("div");
-  ReactDOM.render(<App accountList={{accounts: []}}/>, div);
+  ReactDOM.render(
+    <App
+      accountRepository={{ accounts: [] }}
+      flowRepositoryRepository={{ }}
+      stationRepository={{ stations: [], stationIndex: { byId: {}, byName: {}} }}
+    />,
+    document.createElement("div")
+  );
 });

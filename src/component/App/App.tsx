@@ -1,21 +1,33 @@
 import * as React from "react";
 import {observer} from "mobx-react";
-import "./App.css";
 import {faEthereum} from "@fortawesome/fontawesome-free-brands";
-import {AccountList, AccountListProps} from "../Account/AccountList";
+import {Loader} from "../Loader/Loader";
+import {AccountRepository} from "../Account/AccountRepository";
+import {FlowRepositoryRepository} from "../FlowRepository/FlowRepositoryRepository";
+import {StationRepository} from "../Station/StationRepository";
 
 const FontAwesomeIcon = require("@fortawesome/react-fontawesome");
 
 export const App = observer((props: AppProps) => {
   return (
-    <div className="App">
-      <FontAwesomeIcon icon={faEthereum} />
-      <h1>The Planar Network Demo</h1>
-      <AccountList accounts={props.accountList.accounts} />
-    </div>
+    <section className="hero is-medium is-primary is-bold">
+      <div className="hero-body">
+        <div className="container">
+          <h1 className="title">The Planar Network Demo <FontAwesomeIcon icon={faEthereum} /></h1>
+          <Loader
+            accounts={props.accountRepository.accounts}
+            flowRepository={props.flowRepositoryRepository.flowRepository}
+            stations={props.stationRepository.stations}
+            stationIndex={props.stationRepository.stationIndex}
+          />
+        </div>
+      </div>
+    </section>
   );
 });
 
 export interface AppProps {
-  accountList: AccountListProps;
+  accountRepository: AccountRepository;
+  flowRepositoryRepository: FlowRepositoryRepository;
+  stationRepository: StationRepository;
 }

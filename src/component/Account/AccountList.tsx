@@ -1,21 +1,19 @@
 import * as React from "react";
 import {observer} from "mobx-react";
-import {Account} from "./AccountRepository";
+import {Address} from "./AccountRepository";
 
-function accountList(props: AccountListProps) {
+export const AccountList = observer<any>((props: AccountListProps) => {
   return props.accounts.length === 0 ? "" : (
     <ul>
       {props.accounts.map(accountRow)}
     </ul>
   );
-}
+});
 
-function accountRow (account: Account, id: number) {
+function accountRow (account: Address, id: number) {
   return <li key={id}>{account}</li>;
 }
 
 export interface AccountListProps {
-  accounts: Account[];
+  accounts: Address[];
 }
-
-export const AccountList = observer<any>(accountList);
