@@ -15,4 +15,5 @@ ReactDOM.render(
 registerServiceWorker();
 container
   .updateAccountList()
-  .then(() => container.deployFlowRepositoryContract(container.accountRepository.accounts[0]));
+  .then(() => container.deployFlowRepositoryContract(container.accountRepository.accounts[0]))
+  .then(contract => console.log(contract));
